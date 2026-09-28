@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bringing Ideas to Life - Portfolio Hub</title>
+    
+    <!-- Google Fonts: Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base settings */
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Animated Sky Background Elements */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            filter: blur(8px);
+            opacity: 0.4;
+            animation: float 40s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(-200px); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        /* Carousel specific styles */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .carousel-track {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .carousel-item {
+            scroll-snap-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        /* Button Hover Effects */
+        .btn-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-hover:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="relative text-slate-800">
+
+    <!-- Decorative Background Clouds -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
+        <div class="cloud w-64 h-24 top-[10%]" style="animation-duration: 45s; animation-delay: -10s;"></div>
+        <div class="cloud w-96 h-32 top-[30%]" style="animation-duration: 60s; opacity: 0.3;"></div>
+        <div class="cloud w-72 h-24 top-[60%]" style="animation-duration: 50s; animation-delay: -25s;"></div>
+        <div class="cloud w-48 h-16 top-[80%]" style="animation-duration: 35s; opacity: 0.5;"></div>
+    </div>
+
+    <header class="w-full py-12 text-center px-4 shrink-0">
+        <div class="inline-flex items-center justify-center space-x-2 bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full mb-4 border border-white/60 text-sky-700 text-sm font-medium">
+            <i data-lucide="cloud" class="w-4 h-4"></i>
+            <span>Portfolio Showcase</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-800 drop-shadow-sm mb-4">
+            Bringing Ideas <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600">to Life</span>
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
+            ศูนย์รวมผลงานและการสร้างสรรค์เว็บแอปพลิเคชันที่หลากหลาย เลื่อนซ้าย-ขวาเพื่อสำรวจโปรเจกต์ที่เราตั้งใจพัฒนา
+        </p>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center w-full relative px-4 pb-16">
+        
+        <!-- Left Navigation Arrow -->
+        <button id="btn-left" class="absolute left-2 md:left-8 z-10 p-3 rounded-full glass-panel text-sky-700 hover:text-white hover:bg-sky-500 transition-all shadow-lg hidden md:flex focus:outline-none">
+            <i data-lucide="chevron-left" class="w-8 h-8"></i>
+        </button>
+
+        <!-- Carousel Track -->
+        <div id="carousel" class="carousel-track hide-scrollbar flex w-full max-w-7xl overflow-x-auto gap-6 md:gap-8 px-4 md:px-24 py-8 items-stretch">
+            
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">01</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-sky-600">
+                    <i data-lucide="user" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">Personal website</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">เว็บไซต์ส่วนตัวที่นำเสนอประวัติและผลงานต่างๆ อย่างเป็นเอกลักษณ์</p>
+                <a href="https://sites.google.com/northbkk.ac.th/respawn-zone/home" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">02</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-indigo-500">
+                    <i data-lucide="moon" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">Sleep Science Laboratory</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">ศูนย์รวมข้อมูลวิชาการและงานวิจัยเพื่อสุขภาพและการนอนหลับที่ดี</p>
+                <a href="https://sites.google.com/northbkk.ac.th/sleepsciencelaboratory/home" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">03</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-cyan-600">
+                    <i data-lucide="clipboard-list" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">Open House Registration</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">ระบบลงทะเบียนร่วมงาน Open House ที่ใช้งานง่ายและรวดเร็ว</p>
+                <a href="https://682200098-cloud.github.io/openhouse-regis/" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">04</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-teal-600">
+                    <i data-lucide="activity" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">BMI Website</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">โปรแกรมคำนวณดัชนีมวลกายเพื่อช่วยประเมินสุขภาพพื้นฐานของคุณ</p>
+                <a href="https://script.google.com/a/macros/northbkk.ac.th/s/AKfycbydeh964LmiThSg8jRUtIcLvYDHQ9GT9k07IW1tXPhl6npLwAV2Qh_XMs53DZg7NJ0z/exec" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">05</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-purple-600">
+                    <i data-lucide="gamepad-2" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">King Defeater</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">โปรเจกต์เกมบนเว็บสุดมันส์ ท้าทายความสามารถในการเอาชนะศัตรู</p>
+                <a href="https://682200098-cloud.github.io/game-design-by-Nutthawat/" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">06</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-orange-500">
+                    <i data-lucide="utensils" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">TailorMade Eats</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">แพลตฟอร์มแนะนำและจัดการเมนูอาหารที่ปรับแต่งได้ตามใจคุณ</p>
+                <a href="https://682200098-cloud.github.io/tailormade-eats2/" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="carousel-item flex-none w-80 md:w-96 glass-panel rounded-3xl p-8 flex flex-col relative group">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg transform group-hover:scale-110 transition-transform">07</div>
+                <div class="mb-6 w-14 h-14 rounded-2xl bg-white/70 flex items-center justify-center shadow-inner text-blue-700">
+                    <i data-lucide="users" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-slate-800 leading-tight">NEXUS 5</h3>
+                <p class="text-slate-600 mb-8 flex-grow leading-relaxed">โปรเจกต์นำเสนอทีมงานคุณภาพและผลงานความร่วมมือของทั้ง 5 คน</p>
+                <a href="https://682200098-cloud.github.io/Best-team/" target="_blank" class="btn-hover w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-center font-medium shadow-md flex items-center justify-center gap-2">
+                    เข้าสู่เว็บไซต์ <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+            
+            <!-- Spacing block at the end to ensure the last card can be centered/viewed comfortably -->
+            <div class="flex-none w-4 md:w-8"></div>
+        </div>
+
+        <!-- Right Navigation Arrow -->
+        <button id="btn-right" class="absolute right-2 md:right-8 z-10 p-3 rounded-full glass-panel text-sky-700 hover:text-white hover:bg-sky-500 transition-all shadow-lg hidden md:flex focus:outline-none">
+            <i data-lucide="chevron-right" class="w-8 h-8"></i>
+        </button>
+
+    </main>
+
+    <footer class="mt-auto py-6 text-center text-slate-600/80 text-sm">
+        <p>&copy; 2026 Bringing Ideas to Life. Crafted with clean design and smooth interactions.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Carousel Navigation Logic
+        const carousel = document.getElementById('carousel');
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+
+        // Function to determine how much to scroll based on screen size
+        const getScrollAmount = () => {
+            const cardWidth = carousel.querySelector('.carousel-item').offsetWidth;
+            const gap = parseInt(window.getComputedStyle(carousel).gap) || 0;
+            return cardWidth + gap;
+        };
+
+        btnLeft.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: -getScrollAmount(),
+                behavior: 'smooth'
+            });
+        });
+
+        btnRight.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: getScrollAmount(),
+                behavior: 'smooth'
+            });
+        });
+
+        // Touch swipe indicator for mobile (Optional UX enhancement)
+        // Browsers handle scroll natively smoothly due to snap-type, 
+        // this is just to ensure arrows hide/show based on scroll position if desired.
+        const updateArrowVisibility = () => {
+            if (carousel.scrollLeft <= 10) {
+                btnLeft.style.opacity = "0.3";
+                btnLeft.style.pointerEvents = "none";
+            } else {
+                btnLeft.style.opacity = "1";
+                btnLeft.style.pointerEvents = "auto";
+            }
+
+            if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 10)) {
+                btnRight.style.opacity = "0.3";
+                btnRight.style.pointerEvents = "none";
+            } else {
+                btnRight.style.opacity = "1";
+                btnRight.style.pointerEvents = "auto";
+            }
+        };
+
+        // Initialize visibility and listen for scrolling
+        carousel.addEventListener('scroll', updateArrowVisibility);
+        window.addEventListener('resize', updateArrowVisibility);
+        updateArrowVisibility(); // Initial check
+    </script>
+</body>
+</html>
